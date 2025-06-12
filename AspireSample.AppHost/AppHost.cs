@@ -3,11 +3,14 @@ var builder = DistributedApplication.CreateBuilder(args);
 var apiService = builder.AddProject<Projects.AspireSample_ApiService>("apiservice")
     .WithHttpHealthCheck("/health");
 
-builder.AddProject<Projects.AspireSample_Elastic>("elastic")
-    .WithExternalHttpEndpoints()
-    .WithHttpHealthCheck("/health")
-    .WithReference(apiService)
-    .WaitFor(apiService);
+// var elasticsearch = builder.AddElasticsearch("elastic-client")
+//     .WithExternalHttpEndpoints()
+//     .WithHttpHealthCheck("/health");
+
+builder.AddProject<Projects.AspireSample_Elastic>("elastic-service")
+    .WithHttpHealthCheck("/health");
+    // .WithReference(elasticsearch);
+    // .WaitFor(elasticsearch);
 
 builder.AddProject<Projects.AspireSample_Web>("webfrontend")
     .WithExternalHttpEndpoints()
@@ -16,3 +19,6 @@ builder.AddProject<Projects.AspireSample_Web>("webfrontend")
     .WaitFor(apiService);
 
 builder.Build().Run();
+
+// Example: reference elasticsearch from your elasticservice if needed
+//var elasticService = builder.AddProject<Projects.AspireSample_Elastic>("elasticservice").WithReference(elasticsearch);
