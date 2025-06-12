@@ -1,0 +1,6 @@
+@AspireSample.Elastic_HostAddress = http://localhost:5266
+
+GET {{AspireSample.Elastic_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

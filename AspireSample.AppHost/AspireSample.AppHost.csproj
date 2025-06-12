@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AspireSample.ApiService\AspireSample.ApiService.csproj" />
     <ProjectReference Include="..\AspireSample.Web\AspireSample.Web.csproj" />
+    <ProjectReference Include="..\AspireSample.Elastic\AspireSample.Elastic.csproj" />
   </ItemGroup>
 
   <ItemGroup>
