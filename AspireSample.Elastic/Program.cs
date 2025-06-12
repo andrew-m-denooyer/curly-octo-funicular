@@ -13,11 +13,18 @@ builder.Services.AddOpenApi();
 // Add services to the container.
 builder.Services.AddProblemDetails();
 
+try
+{
+    builder.AddElasticsearchClient(
+        "elasticsearch",
+        static settings =>
+            settings.Endpoint = new Uri("http://elastic:password@localhost:27011"));
+}
+catch (Exception e)
+{
+    ;
+}
 
-builder.AddElasticsearchClient(
-    "elasticsearch",
-    static settings =>
-        settings.Endpoint = new Uri("http://elastic:password@localhost:27011"));
 
 
 var app = builder.Build();

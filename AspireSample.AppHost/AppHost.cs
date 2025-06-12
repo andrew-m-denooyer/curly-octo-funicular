@@ -1,14 +1,26 @@
+using AspireSample.AppHost;
+using Json.Patch;
+
 var builder = DistributedApplication.CreateBuilder(args);
+var password = builder.AddParameter("password", "default-password", secret: true);
+
+var elasticsearch = builder.AddElasticsearch("elasticsearch", password)
+    .RunElasticWithHttpsDevCertificate(port: 9200);
+    // .WithEnvironment("xpack.security.http.ssl.enabled", "false")
+    // .WithDataVolume()
+    // .PublishAsContainer();
+    
+
 
 var apiService = builder.AddProject<Projects.AspireSample_ApiService>("apiservice")
     .WithHttpHealthCheck("/health");
 
-var password = builder.AddParameter("password", secret: true);
-var elasticsearch = builder.AddElasticsearch("elasticsearch", password)
-    .WithDataVolume();
+
+
 
 builder.AddProject<Projects.AspireSample_Elastic>("elastic-service")
-    .WithHttpHealthCheck("/health")
+    .WithExternalHttpEndpoints()
+    // .WithHttpHealthCheck("/health")
     .WithReference(elasticsearch)
     .WaitFor(elasticsearch);
 
