@@ -4,11 +4,8 @@ using Json.Patch;
 var builder = DistributedApplication.CreateBuilder(args);
 var password = builder.AddParameter("password", "default-password", secret: true);
 
-var elasticsearch = builder.AddElasticsearch("elasticsearch", password)
-    .RunElasticWithHttpsDevCertificate(port: 9200);
-    // .WithEnvironment("xpack.security.http.ssl.enabled", "false")
-    // .WithDataVolume()
-    // .PublishAsContainer();
+var elasticsearch = builder.AddElasticsearch("elasticsearch", password);
+    // .RunElasticWithHttpsDevCertificate(port: 9200);
     
 
 
