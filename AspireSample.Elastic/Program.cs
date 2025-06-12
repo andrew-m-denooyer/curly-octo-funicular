@@ -14,10 +14,10 @@ builder.Services.AddOpenApi();
 builder.Services.AddProblemDetails();
 
 
-// builder.AddElasticsearchClient("elasticsearch", (settings) =>
-// {
-//     settings.Endpoint = new Uri("http://localhost:27011");
-// });
+builder.AddElasticsearchClient(
+    "elasticsearch",
+    static settings =>
+        settings.Endpoint = new Uri("http://elastic:password@localhost:27011"));
 
 
 var app = builder.Build();
